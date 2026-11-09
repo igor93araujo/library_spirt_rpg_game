@@ -33,7 +33,7 @@ public class QuitCommand implements Command {
     @Override
     public boolean execute(String argument) {
         if (!argument.isEmpty()) {
-            output.print("Sair de quê?");
+            output.println("Sair de quê?");
             return false;
         }
         return true;

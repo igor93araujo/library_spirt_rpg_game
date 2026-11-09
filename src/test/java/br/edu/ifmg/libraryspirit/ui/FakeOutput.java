@@ -13,7 +13,12 @@ public class FakeOutput implements Output {
     private final List<String> messages = new ArrayList<>();
 
     @Override
-    public void print(String message) {
+    public void print(String text) {
+        messages.add(text);
+    }
+
+    @Override
+    public void println(String message) {
         messages.add(message);
     }
 

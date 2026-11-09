@@ -49,18 +49,26 @@ public class Game {
 
     /**
      * Executa a partida: mostra a introdução e repete o ciclo
-     * "ler comando → executar" até um comando encerrar o jogo
-     * ou a entrada terminar.
+     * "mostrar prompt → ler comando → executar" até um comando encerrar
+     * o jogo ou a entrada terminar. Cada resposta fica entre linhas em
+     * branco para facilitar a leitura.
      */
     public void play() {
         printWelcome();
 
         boolean finished = false;
-        while (!finished && parser.hasNextInput()) {
+        while (!finished) {
+            output.print("> ");
+            if (!parser.hasNextInput()) {
+                output.println();
+                break;
+            }
+            output.println();
             finished = processInput(parser.readInput());
+            output.println();
         }
 
-        output.print("Obrigado por jogar. Até a próxima!");
+        output.println("Obrigado por jogar. Até a próxima!");
     }
 
     /**
@@ -68,15 +76,16 @@ public class Game {
      */
     private void printWelcome() {
         Room room = player.getCurrentRoom();
-        output.print("");
-        output.print("");
-        output.print("=== " + TITLE + " ===");
-        output.print("Um feitiço antigo foi quebrado e as histórias escaparam dos livros.");
-        output.print("Só você, o espírito guardião, pode consertar o estrago.");
-        output.print("Digite 'ajuda' se precisar.");
-        output.print("");
-        output.print(room.getDescription());
-        output.print(room.getExitsDescription());
+        output.println();
+        output.println();
+        output.println("=== " + TITLE + " ===");
+        output.println("Um feitiço antigo foi quebrado e as histórias escaparam dos livros.");
+        output.println("Só você, o espírito guardião, pode consertar o estrago.");
+        output.println("Digite 'ajuda' se precisar.");
+        output.println();
+        output.println(room.getDescription());
+        output.println(room.getExitsDescription());
+        output.println();
     }
 
     /**
@@ -91,7 +100,7 @@ public class Game {
         }
         Command command = commandWords.get(input.getCommandWord());
         if (command == null) {
-            output.print("Não entendi. Digite 'ajuda' para ver os comandos.");
+            output.println("Não entendi. Digite 'ajuda' para ver os comandos.");
             return false;
         }
         return command.execute(input.getArgument());

@@ -9,12 +9,23 @@ package br.edu.ifmg.libraryspirit.ui;
 public class ConsoleOutput implements Output {
 
     /**
-     * Escreve a mensagem no terminal usando {@code System.out}.
+     * Escreve o texto no terminal sem pular linha.
+     *
+     * @param text texto a ser exibido
+     */
+    @Override
+    public void print(String text) {
+        System.out.print(text);
+        System.out.flush();
+    }
+
+    /**
+     * Escreve a mensagem no terminal e pula linha.
      *
      * @param message texto a ser exibido
      */
     @Override
-    public void print(String message) {
+    public void println(String message) {
         System.out.println(message);
     }
 }

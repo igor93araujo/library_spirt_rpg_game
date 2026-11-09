@@ -32,26 +32,45 @@ public class GoCommand implements Command {
 
     /**
      * Move o jogador na direção informada, se houver saída.
+     * Aceita a direção sozinha ("ir norte") ou com "para" ("ir para norte").
      *
-     * @param argument direção desejada (ex.: "norte")
+     * @param argument direção desejada (ex.: "norte" ou "para norte")
      * @return sempre {@code false}, pois andar não termina o jogo
      */
     @Override
     public boolean execute(String argument) {
-        if (argument.isEmpty()) {
-            output.print("Ir para onde?");
+        String direction = removePara(argument);
+        if (direction.isEmpty()) {
+            output.println("Ir para onde?");
             return false;
         }
 
-        Room next = player.getCurrentRoom().getExit(argument);
+        Room next = player.getCurrentRoom().getExit(direction);
         if (next == null) {
-            output.print("Não há passagem nessa direção.");
+            output.println("Não há passagem nessa direção.");
             return false;
         }
 
         player.moveTo(next);
-        output.print(next.getDescription());
-        output.print(next.getExitsDescription());
+        output.println(next.getDescription());
+        output.println(next.getExitsDescription());
         return false;
+    }
+
+    /**
+     * Remove a palavra "para" do começo do argumento, se existir.
+     * Ex.: "para norte" → "norte"; "para" → ""; "norte" → "norte".
+     *
+     * @param argument texto digitado depois de "ir"
+     * @return só a direção
+     */
+    private String removePara(String argument) {
+        if (argument.equals("para")) {
+            return "";
+        }
+        if (argument.startsWith("para ")) {
+            return argument.substring("para ".length());
+        }
+        return argument;
     }
 }

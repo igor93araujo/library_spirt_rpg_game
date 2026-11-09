@@ -19,12 +19,15 @@ class ConsoleOutputTest {
         ByteArrayOutputStream captured = new ByteArrayOutputStream();
         System.setOut(new PrintStream(captured, true, StandardCharsets.UTF_8));
         try {
-            new ConsoleOutput().print("Olá, espírito!");
+            ConsoleOutput output = new ConsoleOutput();
+            output.print("> ");
+            output.println("Olá, espírito!");
+            output.println();
         } finally {
             System.setOut(original);
         }
 
-        assertEquals("Olá, espírito!" + System.lineSeparator(),
-                captured.toString(StandardCharsets.UTF_8));
+        String nl = System.lineSeparator();
+        assertEquals("> Olá, espírito!" + nl + nl, captured.toString(StandardCharsets.UTF_8));
     }
 }

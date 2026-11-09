@@ -36,10 +36,10 @@ public class HelpCommand implements Command {
      */
     @Override
     public boolean execute(String argument) {
-        output.print("Você é o espírito guardião da biblioteca.");
-        output.print("Recolha as páginas mágicas e sele o Grande Tomo.");
-        output.print("");
-        output.print("Comandos: " + commandWords.getAllWords());
+        output.println("Você é o espírito guardião da biblioteca.");
+        output.println("Recolha as páginas mágicas e sele o Grande Tomo.");
+        output.println();
+        output.println("Comandos: " + commandWords.getAllWords());
         return false;
     }
 }

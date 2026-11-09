@@ -12,9 +12,25 @@ package br.edu.ifmg.libraryspirit.ui;
 public interface Output {
 
     /**
+     * Exibe um texto sem pular linha no final.
+     * Útil para o prompt "&gt; ", onde o jogador digita na mesma linha.
+     *
+     * @param text texto a ser exibido
+     */
+    void print(String text);
+
+    /**
      * Exibe uma mensagem para o jogador, seguida de quebra de linha.
      *
      * @param message texto a ser exibido
      */
-    void print(String message);
+    void println(String message);
+
+    /**
+     * Exibe uma linha em branco, para separar blocos de texto.
+     * Método {@code default}: já vem pronto para todas as implementações.
+     */
+    default void println() {
+        println("");
+    }
 }

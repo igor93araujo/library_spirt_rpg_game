@@ -43,6 +43,21 @@ class GoCommandTest {
     }
 
     @Test
+    void acceptsParaBeforeDirection() {
+        go.execute("para oeste");
+
+        assertSame(horror, player.getCurrentRoom());
+    }
+
+    @Test
+    void asksDirectionWhenOnlyParaIsTyped() {
+        go.execute("para");
+
+        assertSame(hall, player.getCurrentRoom());
+        assertEquals("Ir para onde?", output.getAllText());
+    }
+
+    @Test
     void staysWhenThereIsNoExit() {
         go.execute("norte");
 
