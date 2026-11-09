@@ -1,0 +1,35 @@
+# Build Maven
+target/
+
+# Java compilado e pacotes
+*.class
+*.jar
+*.war
+*.log
+hs_err_pid*
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# BlueJ
+*.ctxt
+package.bluej
+bluej.pkg
+bluej.pkh
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
