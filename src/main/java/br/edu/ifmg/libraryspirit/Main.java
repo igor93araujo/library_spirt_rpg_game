@@ -1,4 +1,4 @@
-package br.edu.libraryspirit;
+package br.edu.ifmg.libraryspirit;
 
 /**
  * Ponto de entrada do jogo O Espírito da Biblioteca.

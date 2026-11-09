@@ -1,4 +1,4 @@
-package br.edu.libraryspirit;
+package br.edu.ifmg.libraryspirit;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;

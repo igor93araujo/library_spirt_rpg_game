@@ -43,9 +43,9 @@ java -jar target/library-spirit-rpg-1.0.0.jar
 ## Estrutura do projeto
 
 ```
-src/main/java/br/edu/libraryspirit/   código do jogo (pacote base)
-src/test/java/br/edu/libraryspirit/   testes JUnit 5
-pom.xml                               configuração do Maven
+src/main/java/br/edu/ifmg/libraryspirit/   código do jogo (pacote base)
+src/test/java/br/edu/ifmg/libraryspirit/   testes JUnit 5
+pom.xml                                    configuração do Maven
 ```
 
 Os pacotes `game`, `commands`, `world`, `items`, `characters` e `ui` serão criados ao longo das fases descritas no plano.
