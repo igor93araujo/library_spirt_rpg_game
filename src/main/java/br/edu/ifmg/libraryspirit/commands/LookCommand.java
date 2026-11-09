@@ -31,7 +31,8 @@ public class LookCommand implements Command {
     }
 
     /**
-     * Mostra a descrição e as saídas da sala atual. O argumento é ignorado.
+     * Mostra a descrição, os itens (se houver) e as saídas da sala atual.
+     * O argumento é ignorado.
      *
      * @param argument ignorado
      * @return sempre {@code false}, pois olhar não termina o jogo
@@ -40,6 +41,9 @@ public class LookCommand implements Command {
     public boolean execute(String argument) {
         Room room = player.getCurrentRoom();
         output.println(room.getDescription());
+        if (room.hasItems()) {
+            output.println(room.getItemsDescription());
+        }
         output.println(room.getExitsDescription());
         return false;
     }

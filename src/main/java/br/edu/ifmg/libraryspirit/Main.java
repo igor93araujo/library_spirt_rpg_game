@@ -3,8 +3,10 @@ package br.edu.ifmg.libraryspirit;
 import br.edu.ifmg.libraryspirit.characters.Player;
 import br.edu.ifmg.libraryspirit.commands.GoCommand;
 import br.edu.ifmg.libraryspirit.commands.HelpCommand;
+import br.edu.ifmg.libraryspirit.commands.InventoryCommand;
 import br.edu.ifmg.libraryspirit.commands.LookCommand;
 import br.edu.ifmg.libraryspirit.commands.QuitCommand;
+import br.edu.ifmg.libraryspirit.commands.TakeCommand;
 import br.edu.ifmg.libraryspirit.game.CommandWords;
 import br.edu.ifmg.libraryspirit.game.Game;
 import br.edu.ifmg.libraryspirit.game.Parser;
@@ -33,6 +35,8 @@ public class Main {
         CommandWords commandWords = new CommandWords();
         commandWords.register("ir", new GoCommand(output, player));
         commandWords.register("olhar", new LookCommand(output, player));
+        commandWords.register("pegar", new TakeCommand(output, player));
+        commandWords.register("inventario", new InventoryCommand(output, player));
         commandWords.register("ajuda", new HelpCommand(output, commandWords));
         commandWords.register("sair", new QuitCommand(output));
 
