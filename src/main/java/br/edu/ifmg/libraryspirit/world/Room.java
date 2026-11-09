@@ -3,13 +3,16 @@ package br.edu.ifmg.libraryspirit.world;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import br.edu.ifmg.libraryspirit.items.Inventory;
+import br.edu.ifmg.libraryspirit.items.Item;
+
 /**
  * Representa uma sala da biblioteca.
- * Guarda a descrição da sala e as saídas para as salas vizinhas.
- * Cada saída é identificada por uma direção (ex.: "norte", "leste").
+ * Guarda a descrição da sala, as saídas para as salas vizinhas e os itens
+ * que estão nela. Cada saída é identificada por uma direção (ex.: "norte").
  *
  * @author Grupo O Espírito da Biblioteca
- * @version 1.0
+ * @version 1.1
  */
 public class Room {
 
@@ -22,14 +25,18 @@ public class Room {
      */
     private final Map<String, Room> exits;
 
+    /** Itens que estão na sala e podem ser pegos. */
+    private final Inventory items;
+
     /**
-     * Cria uma sala sem saídas.
+     * Cria uma sala sem saídas e sem itens.
      *
      * @param description texto que descreve a sala
      */
     public Room(String description) {
         this.description = description;
         this.exits = new LinkedHashMap<>();
+        this.items = new Inventory();
     }
 
     /**
@@ -71,5 +78,45 @@ public class Room {
             return "Saídas: nenhuma";
         }
         return "Saídas: " + String.join(" ", exits.keySet());
+    }
+
+    /**
+     * Coloca um item na sala.
+     *
+     * @param item item a ser colocado
+     */
+    public void addItem(Item item) {
+        items.add(item);
+    }
+
+    /**
+     * Tira um item da sala (por exemplo, quando o jogador o pega).
+     *
+     * @param name nome do item
+     * @return o item removido, ou {@code null} se ele não estiver na sala
+     */
+    public Item removeItem(String name) {
+        return items.remove(name);
+    }
+
+    /**
+     * Informa se a sala tem algum item.
+     *
+     * @return {@code true} se houver pelo menos um item
+     */
+    public boolean hasItems() {
+        return !items.isEmpty();
+    }
+
+    /**
+     * Monta o texto com os itens da sala.
+     *
+     * @return texto como "Itens: chave, vela", ou "Itens: nenhum"
+     */
+    public String getItemsDescription() {
+        if (items.isEmpty()) {
+            return "Itens: nenhum";
+        }
+        return "Itens: " + items.getNames();
     }
 }
