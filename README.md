@@ -2,9 +2,6 @@
 
 Jogo de texto para terminal, baseado no *World of Zuul* (Barnes & Kölling). Você é o espírito guardião de uma biblioteca centenária e precisa recolher as páginas mágicas para selar o Grande Tomo.
 
-- Enredo: [proposta_de_enredo_o_esp_rito_da_biblioteca.md](business_rules_docs/proposta_de_enredo_o_esp_rito_da_biblioteca.md)
-- Plano de desenvolvimento: [PLANO_DE_DESENVOLVIMENTO.md](business_rules_docs/PLANO_DE_DESENVOLVIMENTO.md)
-
 ## Requisitos
 
 - JDK 17 ou superior (`java -version`)
