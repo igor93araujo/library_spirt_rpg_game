@@ -1,6 +1,3 @@
-# library_spirt_rpg_game
-Projeto desenvolvido como trabalho final na disciplina de Programação 2 focado em programação orientada objetos usando JAVA
-
 ## O Espírito da Biblioteca
 
 Jogo de texto para terminal, baseado no *World of Zuul* (Barnes & Kölling). Você é o espírito guardião de uma biblioteca centenária e precisa recolher as páginas mágicas para selar o Grande Tomo.
