@@ -33,3 +33,7 @@ bluej.pkh
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Arquivos locais do grupo (Kiro e documentos de regras de negócio)
+.kiro/
+business_rules_docs/
