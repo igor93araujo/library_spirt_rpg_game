@@ -6,7 +6,9 @@ import br.edu.ifmg.libraryspirit.commands.HelpCommand;
 import br.edu.ifmg.libraryspirit.commands.InventoryCommand;
 import br.edu.ifmg.libraryspirit.commands.LookCommand;
 import br.edu.ifmg.libraryspirit.commands.QuitCommand;
+import br.edu.ifmg.libraryspirit.commands.StatusCommand;
 import br.edu.ifmg.libraryspirit.commands.TakeCommand;
+import br.edu.ifmg.libraryspirit.commands.UseCommand;
 import br.edu.ifmg.libraryspirit.game.CommandWords;
 import br.edu.ifmg.libraryspirit.game.Game;
 import br.edu.ifmg.libraryspirit.game.Parser;
@@ -37,6 +39,8 @@ public class Main {
         commandWords.register("olhar", new LookCommand(output, player));
         commandWords.register("pegar", new TakeCommand(output, player));
         commandWords.register("inventario", new InventoryCommand(output, player));
+        commandWords.register("usar", new UseCommand(output, player));
+        commandWords.register("status", new StatusCommand(output, player));
         commandWords.register("ajuda", new HelpCommand(output, commandWords));
         commandWords.register("sair", new QuitCommand(output));
 
