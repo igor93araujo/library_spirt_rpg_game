@@ -67,4 +67,14 @@ public abstract class Item {
      * @return mensagem que descreve o que aconteceu, para mostrar ao jogador
      */
     public abstract String use(Player player);
+
+    /**
+     * Informa se o item desaparece do inventário depois de usado.
+     * Por padrão os itens não são consumidos.
+     *
+     * @return {@code true} se o item deve ser removido após o uso
+     */
+    public boolean isConsumable() {
+        return false;
+    }
 }

@@ -55,4 +55,39 @@ class PlayerTest {
         assertSame(key, player.removeItem("chave"));
         assertNull(player.getItem("chave"));
     }
+
+    @Test
+    void startsWithThreeLivesAndNoShield() {
+        Player player = new Player(new Room("Hall"));
+        assertEquals(3, player.getLives());
+        assertFalse(player.hasShield());
+        assertTrue(player.isAlive());
+    }
+
+    @Test
+    void damageRemovesLife() {
+        Player player = new Player(new Room("Hall"));
+        assertTrue(player.takeDamage());
+        assertEquals(2, player.getLives());
+    }
+
+    @Test
+    void shieldAbsorbsOneDamage() {
+        Player player = new Player(new Room("Hall"));
+        player.giveShield();
+        assertFalse(player.takeDamage());
+        assertEquals(3, player.getLives());
+        assertFalse(player.hasShield());
+    }
+
+    @Test
+    void diesWithoutLivesAndRestores() {
+        Player player = new Player(new Room("Hall"));
+        player.takeDamage();
+        player.takeDamage();
+        player.takeDamage();
+        assertFalse(player.isAlive());
+        player.restoreLives();
+        assertEquals(3, player.getLives());
+    }
 }

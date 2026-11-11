@@ -1,5 +1,9 @@
 package br.edu.ifmg.libraryspirit.world;
 
+import br.edu.ifmg.libraryspirit.items.Bookmark;
+import br.edu.ifmg.libraryspirit.items.MagicPage;
+import br.edu.ifmg.libraryspirit.items.Theme;
+
 /**
  * Monta o mapa da biblioteca: cria as salas e liga as saídas entre elas.
  * Separar a construção do mapa do resto do jogo deixa o {@code Main} e o
@@ -40,6 +44,12 @@ public class WorldBuilder {
                 "Você está na Sala de Leitura Central. Sob a grande claraboia,\n"
                 + "o Grande Tomo repousa no pedestal, cercado por páginas que giram no ar.");
 
+        horror.addItem(new MagicPage(Theme.HORROR));
+        horror.addItem(new Bookmark(Bookmark.Type.SHIELD));
+        adventure.addItem(new MagicPage(Theme.ADVENTURE));
+        adventure.addItem(new Bookmark(Bookmark.Type.LIFE));
+        sciFi.addItem(new MagicPage(Theme.SCI_FI));
+        sciFi.addItem(new Bookmark(Bookmark.Type.LIFE));
         connect(hall, "oeste", horror, "leste");
         connect(hall, "leste", adventure, "oeste");
         connect(hall, "norte", sciFi, "sul");
