@@ -2,6 +2,7 @@ package br.edu.ifmg.libraryspirit.commands;
 
 import br.edu.ifmg.libraryspirit.characters.Player;
 import br.edu.ifmg.libraryspirit.ui.Output;
+import br.edu.ifmg.libraryspirit.world.Door;
 import br.edu.ifmg.libraryspirit.world.Room;
 
 /**
@@ -51,9 +52,34 @@ public class GoCommand implements Command {
             return false;
         }
 
+        Door door = player.getCurrentRoom().getDoor(direction);
+        if (door != null && door.isLocked() && !tryOpen(door)) {
+            return false;
+        }
         player.moveTo(next);
         output.println(next.getDescription());
         output.println(next.getExitsDescription());
+        return false;
+    }
+
+    /**
+     * Tenta abrir uma porta trancada e avisa o jogador do resultado.
+     *
+     * @param door porta trancada
+     * @return {@code true} se a porta foi aberta
+     */
+    private boolean tryOpen(Door door) {
+        if (door.unlock(player)) {
+            output.println("Você destranca a porta.");
+            return true;
+        }
+        if (door.hasRiddle() && door.hasRequiredItems(player)) {
+            output.println("A porta está trancada. Uma voz sussurra um enigma:");
+            output.println(door.getRiddle().getQuestion());
+            output.println("Use 'responder <resposta>'.");
+        } else {
+            output.println("A porta está trancada.");
+        }
         return false;
     }
 

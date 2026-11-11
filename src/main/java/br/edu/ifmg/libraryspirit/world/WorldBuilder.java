@@ -1,6 +1,10 @@
 package br.edu.ifmg.libraryspirit.world;
 
 import br.edu.ifmg.libraryspirit.items.Bookmark;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.ifmg.libraryspirit.items.Key;
 import br.edu.ifmg.libraryspirit.items.MagicPage;
 import br.edu.ifmg.libraryspirit.items.Theme;
 
@@ -50,11 +54,22 @@ public class WorldBuilder {
         adventure.addItem(new Bookmark(Bookmark.Type.LIFE));
         sciFi.addItem(new MagicPage(Theme.SCI_FI));
         sciFi.addItem(new Bookmark(Bookmark.Type.LIFE));
+        hall.addItem(new Key("chave de bronze", "Uma chave de bronze, gasta pelo tempo."));
+        horror.addItem(new Key("chave de prata", "Uma chave de prata, fria ao toque."));
         connect(hall, "oeste", horror, "leste");
         connect(hall, "leste", adventure, "oeste");
         connect(hall, "norte", sciFi, "sul");
         connect(hall, "sul", readingRoom, "norte");
 
+        lock(hall, "leste", adventure, "oeste", new Door("chave de bronze"));
+        lock(hall, "norte", sciFi, "sul", new Door("chave de prata"));
+        List<String> pages = new ArrayList<>();
+        for (Theme theme : Theme.values()) {
+            pages.add(new MagicPage(theme).getName());
+        }
+        Riddle riddle = new Riddle(
+                "Quem escreveu o romance 'Dom Casmurro'?", "machado de assis");
+        lock(hall, "sul", readingRoom, "norte", new Door(pages, riddle));
         return hall;
     }
 
@@ -69,5 +84,19 @@ public class WorldBuilder {
     private void connect(Room from, String direction, Room to, String backDirection) {
         from.setExit(direction, to);
         to.setExit(backDirection, from);
+    }
+
+    /**
+     * Coloca a mesma porta nos dois lados de uma passagem.
+     *
+     * @param from sala de origem
+     * @param direction direção de {@code from} até {@code to}
+     * @param to sala de destino
+     * @param backDirection direção de {@code to} até {@code from}
+     * @param door porta compartilhada
+     */
+    private void lock(Room from, String direction, Room to, String backDirection, Door door) {
+        from.setDoor(direction, door);
+        to.setDoor(backDirection, door);
     }
 }

@@ -3,6 +3,7 @@ package br.edu.ifmg.libraryspirit.world;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import br.edu.ifmg.libraryspirit.characters.Player;
 import br.edu.ifmg.libraryspirit.items.Inventory;
 import br.edu.ifmg.libraryspirit.items.Item;
 
@@ -24,6 +25,9 @@ public class Room {
      * LinkedHashMap mantém a ordem em que as saídas foram adicionadas.
      */
     private final Map<String, Room> exits;
+
+    /** Portas das saídas: direção → porta. Saídas sem porta ficam livres. */
+    private final Map<String, Door> doors = new LinkedHashMap<>();
 
     /** Itens que estão na sala e podem ser pegos. */
     private final Inventory items;
@@ -118,5 +122,40 @@ public class Room {
             return "Itens: nenhum";
         }
         return "Itens: " + items.getNames();
+    }
+
+    /**
+     * Coloca uma porta numa saída já existente.
+     *
+     * @param direction direção da saída
+     * @param door porta da saída
+     */
+    public void setDoor(String direction, Door door) {
+        doors.put(direction, door);
+    }
+
+    /**
+     * Retorna a porta de uma direção.
+     *
+     * @param direction direção desejada
+     * @return a porta, ou {@code null} se a saída não tiver porta
+     */
+    public Door getDoor(String direction) {
+        return doors.get(direction);
+    }
+
+    /**
+     * Procura uma porta trancada com enigma cujos itens o jogador já tem.
+     *
+     * @param player jogador
+     * @return a porta, ou {@code null} se não houver
+     */
+    public Door findRiddleDoor(Player player) {
+        for (Door door : doors.values()) {
+            if (door.isLocked() && door.hasRiddle() && door.hasRequiredItems(player)) {
+                return door;
+            }
+        }
+        return null;
     }
 }
