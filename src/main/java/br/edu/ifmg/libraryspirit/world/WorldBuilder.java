@@ -7,6 +7,7 @@ import java.util.List;
 import br.edu.ifmg.libraryspirit.items.Key;
 import br.edu.ifmg.libraryspirit.items.MagicPage;
 import br.edu.ifmg.libraryspirit.items.Theme;
+import br.edu.ifmg.libraryspirit.characters.Threat;
 
 /**
  * Monta o mapa da biblioteca: cria as salas e liga as saídas entre elas.
@@ -70,6 +71,16 @@ public class WorldBuilder {
         Riddle riddle = new Riddle(
                 "Quem escreveu o romance 'Dom Casmurro'?", "machado de assis");
         lock(hall, "sul", readingRoom, "norte", new Door(pages, riddle));
+
+        horror.addThreat(new Threat(
+                "Uma sombra desliza pela estante em sua direção...", "esconder"));
+        horror.addThreat(new Threat(
+                "Um livro de feitiços voa direto na sua cabeça!", "abaixar"));
+        adventure.addThreat(new Threat(
+                "Raízes brotam do chão sob seus pés!", "pular"));
+        sciFi.addThreat(new Threat(
+                "Um feixe de laser corrompido varre a sala!", "desviar"));
+
         return hall;
     }
 
