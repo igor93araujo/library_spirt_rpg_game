@@ -2,10 +2,13 @@ package br.edu.ifmg.libraryspirit.world;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.ifmg.libraryspirit.characters.Player;
 import br.edu.ifmg.libraryspirit.items.Inventory;
 import br.edu.ifmg.libraryspirit.items.Item;
+import br.edu.ifmg.libraryspirit.characters.Threat;
 
 /**
  * Representa uma sala da biblioteca.
@@ -31,6 +34,12 @@ public class Room {
 
     /** Itens que estão na sala e podem ser pegos. */
     private final Inventory items;
+
+    /** Ameaças da sala, na ordem em que aparecem. */
+    private final List<Threat> threats = new ArrayList<>();
+
+    /** Posição da ameaça atual na lista. */
+    private int currentThreat = 0;
 
     /**
      * Cria uma sala sem saídas e sem itens.
@@ -157,5 +166,44 @@ public class Room {
             }
         }
         return null;
+    }
+
+    /**
+     * Adiciona uma ameaça à sala. As ameaças aparecem na ordem em que foram adicionadas.
+     *
+     * @param threat ameaça a ser adicionada
+     */
+    public void addThreat(Threat threat) {
+        threats.add(threat);
+    }
+
+    /**
+     * Informa se ainda há uma ameaça esperando resposta do jogador.
+     *
+     * @return {@code true} se existe uma ameaça não enfrentada
+     */
+    public boolean hasActiveThreat() {
+        return currentThreat < threats.size();
+    }
+
+    /**
+     * Retorna a ameaça que está esperando resposta.
+     *
+     * @return a ameaça atual, ou {@code null} se não houver nenhuma
+     */
+    public Threat getThreat() {
+        if (!hasActiveThreat()) {
+            return null;
+        }
+        return threats.get(currentThreat);
+    }
+
+    /**
+     * Marca a ameaça atual como enfrentada e passa para a próxima, se houver.
+     */
+    public void resolveThreat() {
+        if (hasActiveThreat()) {
+            currentThreat++;
+        }
     }
 }
