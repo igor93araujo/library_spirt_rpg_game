@@ -41,7 +41,8 @@ public class DodgeCommand implements Command {
      * Reage à ameaça atual da sala. O argumento é ignorado.
      *
      * @param argument ignorado
-     * @return {@code false}, pois reagir não termina o jogo
+     * @return {@code true} se o jogador ficou sem vidas e o jogo deve terminar,
+     *         {@code false} caso contrário
      */
     @Override
     public boolean execute(String argument) {
@@ -60,6 +61,11 @@ public class DodgeCommand implements Command {
             output.println("Ação errada! A ameaça te atinge. Vidas: " + player.getLives() + ".");
         } else {
             output.println("Ação errada, mas o escudo absorveu o dano!");
+        }
+
+        if (!player.isAlive()) {
+            output.println("Suas forças se esgotaram. Fim de jogo.");
+            return true;
         }
 
         if (room.hasActiveThreat()) {

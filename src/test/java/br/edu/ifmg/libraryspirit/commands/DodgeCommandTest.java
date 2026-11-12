@@ -84,4 +84,16 @@ class DodgeCommandTest {
         assertTrue(room.hasActiveThreat());
         assertTrue(output.getAllText().contains("livro de feitiços"));
     }
+
+    @Test
+    void endsTheGameWhenLivesRunOut() {
+        // 3 ameaças no total, iguais às 3 vidas iniciais
+        room.addThreat(new Threat("Outra ameaça", "pular"));
+        room.addThreat(new Threat("Mais uma ameaça", "pular"));
+
+        assertFalse(dodge("abaixar").execute(""));
+        assertFalse(dodge("abaixar").execute(""));
+        assertTrue(dodge("abaixar").execute(""));
+        assertFalse(player.isAlive());
+    }
 }
