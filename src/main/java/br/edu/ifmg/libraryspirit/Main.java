@@ -1,7 +1,9 @@
 package br.edu.ifmg.libraryspirit;
 
 import br.edu.ifmg.libraryspirit.characters.Player;
+import br.edu.ifmg.libraryspirit.characters.Threat;
 import br.edu.ifmg.libraryspirit.commands.AnswerCommand;
+import br.edu.ifmg.libraryspirit.commands.DodgeCommand;
 import br.edu.ifmg.libraryspirit.commands.GoCommand;
 import br.edu.ifmg.libraryspirit.commands.HelpCommand;
 import br.edu.ifmg.libraryspirit.commands.InventoryCommand;
@@ -43,6 +45,11 @@ public class Main {
         commandWords.register("responder", new AnswerCommand(output, player));
         commandWords.register("usar", new UseCommand(output, player));
         commandWords.register("status", new StatusCommand(output, player));
+
+        for (String action : Threat.VALID_ACTIONS) {
+            commandWords.register(action, new DodgeCommand(output, player, action));
+        }
+
         commandWords.register("ajuda", new HelpCommand(output, commandWords));
         commandWords.register("sair", new QuitCommand(output));
 
