@@ -47,13 +47,12 @@ class DodgeCommandTest {
     }
 
     @Test
-    void wrongActionCostsOneLife() {
+    void wrongActionCostsOneLifeAndKeepsTheThreat() {
         dodge("abaixar").execute("");
 
         assertEquals(Player.INITIAL_LIVES - 1, player.getLives());
-        assertFalse(room.hasActiveThreat());
+        assertTrue(room.hasActiveThreat());
     }
-
     @Test
     void shieldAbsorbsWrongAction() {
         player.giveShield();
@@ -95,5 +94,14 @@ class DodgeCommandTest {
         assertFalse(dodge("abaixar").execute(""));
         assertTrue(dodge("abaixar").execute(""));
         assertFalse(player.isAlive());
+    }
+
+    @Test
+    void canTryAgainAndEscapeAfterWrongAction() {
+        dodge("abaixar").execute("");
+        dodge("pular").execute("");
+
+        assertEquals(Player.INITIAL_LIVES - 1, player.getLives());
+        assertFalse(room.hasActiveThreat());
     }
 }

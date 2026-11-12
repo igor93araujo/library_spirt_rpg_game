@@ -53,9 +53,9 @@ public class DodgeCommand implements Command {
         }
 
         Threat threat = room.getThreat();
-        room.resolveThreat();
 
         if (threat.isCorrect(action)) {
+            room.resolveThreat();
             output.println("Você escapou a tempo!");
         } else if (player.takeDamage()) {
             output.println("Ação errada! A ameaça te atinge. Vidas: " + player.getLives() + ".");
