@@ -29,4 +29,28 @@ class WorldBuilderThreatsTest {
         assertFalse(hall.hasActiveThreat());
         assertFalse(hall.getExit("sul").hasActiveThreat());
     }
+
+    @Test
+    void adventureRoomHasThreeThreatsInOrder() {
+        Room adventure = new WorldBuilder().build().getExit("leste");
+
+        assertTrue(adventure.getThreat().isCorrect("pular"));
+        adventure.resolveThreat();
+        assertTrue(adventure.getThreat().isCorrect("abaixar"));
+        adventure.resolveThreat();
+        assertTrue(adventure.getThreat().isCorrect("desviar"));
+        adventure.resolveThreat();
+        assertFalse(adventure.hasActiveThreat());
+    }
+
+    @Test
+    void sciFiRoomHasTwoThreatsInOrder() {
+        Room sciFi = new WorldBuilder().build().getExit("norte");
+
+        assertTrue(sciFi.getThreat().isCorrect("desviar"));
+        sciFi.resolveThreat();
+        assertTrue(sciFi.getThreat().isCorrect("esconder"));
+        sciFi.resolveThreat();
+        assertFalse(sciFi.hasActiveThreat());
+    }
 }

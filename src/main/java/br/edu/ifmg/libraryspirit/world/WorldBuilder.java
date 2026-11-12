@@ -72,14 +72,22 @@ public class WorldBuilder {
                 "Quem escreveu o romance 'Dom Casmurro'?", "machado de assis");
         lock(hall, "sul", readingRoom, "norte", new Door(pages, riddle));
 
+
         horror.addThreat(new Threat(
                 "Uma sombra desliza pela estante em sua direção...", "esconder"));
         horror.addThreat(new Threat(
                 "Um livro de feitiços voa direto na sua cabeça!", "abaixar"));
         adventure.addThreat(new Threat(
                 "Raízes brotam do chão sob seus pés!", "pular"));
+        adventure.addThreat(new Threat(
+                "Cipós grossos balançam das árvores, bem na altura da sua cabeça!", "abaixar"));
+        adventure.addThreat(new Threat(
+                "Um tigre de origami salta em sua direção, de garras abertas!", "desviar"));
         sciFi.addThreat(new Threat(
                 "Um feixe de laser corrompido varre a sala!", "desviar"));
+        sciFi.addThreat(new Threat(
+                "Um robô de segurança avança, com os olhos vermelhos procurando por você...", "esconder"));
+
 
         return hall;
     }
