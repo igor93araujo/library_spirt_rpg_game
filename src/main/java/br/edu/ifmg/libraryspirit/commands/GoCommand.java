@@ -46,6 +46,11 @@ public class GoCommand implements Command {
             return false;
         }
 
+        if (player.getCurrentRoom().hasActiveThreat()) {
+            output.println("Algo ainda ameaça você! Reaja antes de sair: desviar, pular, abaixar ou esconder.");
+            return false;
+        }
+
         Room next = player.getCurrentRoom().getExit(direction);
         if (next == null) {
             output.println("Não há passagem nessa direção.");
@@ -59,6 +64,13 @@ public class GoCommand implements Command {
         player.moveTo(next);
         output.println(next.getDescription());
         output.println(next.getExitsDescription());
+
+        if (next.hasActiveThreat()) {
+            output.println();
+            output.println(next.getThreat().getDescription());
+            output.println("Reaja: desviar, pular, abaixar ou esconder.");
+        }
+
         return false;
     }
 
