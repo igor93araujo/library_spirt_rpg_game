@@ -4,6 +4,8 @@ import br.edu.ifmg.libraryspirit.characters.Player;
 import br.edu.ifmg.libraryspirit.ui.Output;
 import br.edu.ifmg.libraryspirit.world.Door;
 import br.edu.ifmg.libraryspirit.world.Room;
+import br.edu.ifmg.libraryspirit.boss.GreatTome;
+
 
 /**
  * Comando "ir": move o jogador para a sala vizinha na direção informada.
@@ -20,15 +22,22 @@ public class GoCommand implements Command {
     /** Jogador que será movido. */
     private final Player player;
 
+    /** chefe final da biblioteca.*/
+    private  final GreatTome greatTome;
+
     /**
      * Cria o comando de movimento.
      *
      * @param output onde as mensagens serão exibidas
      * @param player jogador que será movido
      */
-    public GoCommand(Output output, Player player) {
+    public GoCommand(Output output, Player player, GreatTome greatTome) {
         this.output = output;
         this.player = player;
+        this.greatTome = greatTome;
+    }
+    public GoCommand(Output output, Player player) {
+        this(output, player, new GreatTome());
     }
 
     /**
@@ -64,6 +73,13 @@ public class GoCommand implements Command {
         player.moveTo(next);
         output.println(next.getDescription());
         output.println(next.getExitsDescription());
+
+        if (next.isBossRoom()) {
+            output.println();
+            output.println("=== O GRANDE TOMO DESPERTOU! ===");
+            output.println("Etapa atual: " + greatTome.getCurrentStage().getTheme());
+            output.println(greatTome.getCurrentStage().getCurrentThreat().getDescription());
+        }
 
         if (next.hasActiveThreat()) {
             output.println();

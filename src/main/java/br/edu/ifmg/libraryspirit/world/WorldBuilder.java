@@ -49,6 +49,8 @@ public class WorldBuilder {
                 "Você está na Sala de Leitura Central. Sob a grande claraboia,\n"
                 + "o Grande Tomo repousa no pedestal, cercado por páginas que giram no ar.");
 
+        readingRoom.setBossRoom(true);
+
         horror.addItem(new MagicPage(Theme.HORROR));
         horror.addItem(new Bookmark(Bookmark.Type.SHIELD));
         adventure.addItem(new MagicPage(Theme.ADVENTURE));

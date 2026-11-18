@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import br.edu.ifmg.libraryspirit.boss.GreatTome;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +34,7 @@ class DodgeCommandTest {
     }
 
     private DodgeCommand dodge(String action) {
-        return new DodgeCommand(output, player, action);
+        return new DodgeCommand(output, player, action, new GreatTome());
     }
 
     @Test

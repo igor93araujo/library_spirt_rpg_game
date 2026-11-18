@@ -4,6 +4,8 @@ import br.edu.ifmg.libraryspirit.characters.Player;
 import br.edu.ifmg.libraryspirit.characters.Threat;
 import br.edu.ifmg.libraryspirit.ui.Output;
 import br.edu.ifmg.libraryspirit.world.Room;
+import br.edu.ifmg.libraryspirit.boss.GreatTome;
+import br.edu.ifmg.libraryspirit.boss.SealingStage;
 
 /**
  * Comando de reação a uma ameaça: "desviar", "pular", "abaixar" ou "esconder".
@@ -21,6 +23,9 @@ public class DodgeCommand implements Command {
     /** Jogador que reage à ameaça. */
     private final Player player;
 
+    /** chefe final compartilhando pelos comandos do jogo.*/
+    private final  GreatTome greatTome;
+
     /** Ação que este comando representa (ex.: "pular"). */
     private final String action;
 
@@ -31,10 +36,11 @@ public class DodgeCommand implements Command {
      * @param player jogador que reage
      * @param action ação que este comando representa
      */
-    public DodgeCommand(Output output, Player player, String action) {
+    public DodgeCommand(Output output, Player player, String action, GreatTome greatTome) {
         this.output = output;
         this.player = player;
         this.action = action;
+        this.greatTome =greatTome;
     }
 
     /**
@@ -47,6 +53,45 @@ public class DodgeCommand implements Command {
     @Override
     public boolean execute(String argument) {
         Room room = player.getCurrentRoom();
+
+        if (room.isBossRoom() && !greatTome.isDefeated()) {
+
+            SealingStage stage = greatTome.getCurrentStage();
+
+            if (stage.hasActiveThreat()) {
+                Threat bossThreat = stage.getCurrentThreat();
+
+                if (bossThreat.isCorrect(action)) {
+                    stage.advanceRound();
+
+                    if (stage.hasActiveThreat()) {
+                        output.println(stage.getCurrentThreat().getDescription());
+                    } else {
+                        output.println(
+                                "Você escapou por um triz!\n"
+                                        + "A página mágica começa a brilhar em suas mãos.\n"
+                                        + "A ameaça foi superada.\n"
+                                        + "Agora use a página correspondente para restaurar o selo!"
+                        );
+                    }
+
+                } else if (player.takeDamage()) {
+                    output.println("Ação errada! Vidas: " + player.getLives());
+                } else {
+                    output.println("Ação errada, mas o escudo absorveu o dano!");
+                }
+
+                if (!player.isAlive()) {
+                    output.println("Suas forças se esgotaram. Fim de jogo.");
+                    return true;
+                }
+
+                return false;
+            }
+
+            output.println("As ameaças terminaram. Use a página mágica correspondente.");
+            return false;
+        }
         if (!room.hasActiveThreat()) {
             output.println("Não há nada de que escapar agora.");
             return false;

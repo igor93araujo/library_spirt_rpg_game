@@ -41,6 +41,25 @@ public class Room {
     /** Posição da ameaça atual na lista. */
     private int currentThreat = 0;
 
+    /** indica se está na sala contém o chefe final.*/
+    private boolean bossRoom = false;
+
+    /**
+     * Define se esta sala contém o chefe final.
+     */
+    public void setBossRoom(boolean bossRoom) {
+        this.bossRoom = bossRoom;
+    }
+
+    /**
+     * Verifica se esta é a sala do chefe final.
+     */
+    public boolean isBossRoom() {
+        return bossRoom;
+    }
+
+
+
     /**
      * Cria uma sala sem saídas e sem itens.
      *
@@ -206,4 +225,6 @@ public class Room {
             currentThreat++;
         }
     }
+
+
 }

@@ -3,6 +3,10 @@ package br.edu.ifmg.libraryspirit.commands;
 import br.edu.ifmg.libraryspirit.characters.Player;
 import br.edu.ifmg.libraryspirit.items.Item;
 import br.edu.ifmg.libraryspirit.ui.Output;
+import br.edu.ifmg.libraryspirit.boss.GreatTome;
+import br.edu.ifmg.libraryspirit.boss.SealingStage;
+import br.edu.ifmg.libraryspirit.items.MagicPage;
+
 
 /**
  * Comando "usar": usa um item do inventário. Ex.: "usar marcador de vida".
@@ -19,15 +23,22 @@ public class UseCommand implements Command {
     /** Jogador que vai usar o item. */
     private final Player player;
 
+    /** Chefe final compartilhado pelos comando. */
+    private  final GreatTome greatTome;
+
     /**
      * Cria o comando de usar.
      *
      * @param output onde as mensagens serão exibidas
      * @param player jogador que vai usar o item
      */
-    public UseCommand(Output output, Player player) {
+    public UseCommand(Output output, Player player,GreatTome greatTome) {
         this.output = output;
         this.player = player;
+        this.greatTome = greatTome;
+    }
+    public UseCommand(Output output, Player player){
+        this (output,player,null);
     }
 
     /**
@@ -45,6 +56,78 @@ public class UseCommand implements Command {
         Item item = player.getItem(argument);
         if (item == null) {
             output.println("Você não tem nenhum(a) " + argument + ".");
+            return false;
+        }
+        if (item instanceof MagicPage
+                && greatTome != null
+                && greatTome.getCurrentStage() != null) {
+
+            SealingStage stage = greatTome.getCurrentStage();
+
+            // Verifica se a ameaça foi superada.
+            if (!stage.isCompleted()) {
+                output.println(
+                        "A ameaça ainda não foi superada! "
+                                + "Supere o desafio antes de usar a página."
+                );
+                return false;
+            }
+
+            // Verifica se a página corresponde à etapa atual.
+            if (!item.getName().equals(
+                    "pagina do " + stage.getRequiredPage())) {
+
+                output.println(
+                        "Esta não é a página correta para esta etapa!"
+                );
+                return false;
+            }
+
+            // Mensagens de selamento.
+            if (stage.getRequiredPage().equals("terror")) {
+
+                output.println(
+                        "A página do Terror voa de suas mãos\n"
+                                + "e se encaixa no Grande Tomo.\n"
+                                + "Um brilho vermelho percorre sua capa.\n\n"
+                                + "PRIMEIRO SELO RESTAURADO!"
+                );
+
+            } else if (stage.getRequiredPage().equals("aventura")) {
+
+                output.println(
+                        "A página de Aventura retorna ao Grande Tomo.\n"
+                                + "Um clarão dourado ilumina a biblioteca.\n\n"
+                                + "SEGUNDO SELO RESTAURADO!"
+                );
+
+            } else if (stage.getRequiredPage().equals("ficcao")) {
+
+                output.println(
+                        "A última página retorna ao Grande Tomo.\n"
+                                + "A anomalia gravitacional desaparece.\n\n"
+                                + "TERCEIRO SELO RESTAURADO!"
+                );
+            }
+
+            /** Avança para a próxima etapa.*/
+            greatTome.advanceStage();
+
+            if (greatTome.isDefeated()) {
+                return false;
+            }
+
+            /** Mostra a próxima ameaça automaticamente.*/
+            SealingStage nextStage = greatTome.getCurrentStage();
+
+
+            if (nextStage != null
+                    && nextStage.getCurrentThreat() != null) {
+
+                output.println(
+                        nextStage.getCurrentThreat().getDescription()
+                );
+            }
             return false;
         }
         output.println(item.use(player));

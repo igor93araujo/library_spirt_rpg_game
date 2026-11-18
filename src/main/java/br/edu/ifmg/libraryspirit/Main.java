@@ -1,5 +1,6 @@
 package br.edu.ifmg.libraryspirit;
 
+import br.edu.ifmg.libraryspirit.boss.GreatTome;
 import br.edu.ifmg.libraryspirit.characters.Player;
 import br.edu.ifmg.libraryspirit.characters.Threat;
 import br.edu.ifmg.libraryspirit.commands.AnswerCommand;
@@ -37,8 +38,10 @@ public class Main {
         Output output = new ConsoleOutput();
         Player player = new Player(new WorldBuilder().build());
 
+        GreatTome greatTome = new GreatTome();
+
         CommandWords commandWords = new CommandWords();
-        commandWords.register("ir", new GoCommand(output, player));
+        commandWords.register("ir", new GoCommand(output, player,greatTome));
         commandWords.register("olhar", new LookCommand(output, player));
         commandWords.register("pegar", new TakeCommand(output, player));
         commandWords.register("inventario", new InventoryCommand(output, player));
@@ -47,7 +50,7 @@ public class Main {
         commandWords.register("status", new StatusCommand(output, player));
 
         for (String action : Threat.VALID_ACTIONS) {
-            commandWords.register(action, new DodgeCommand(output, player, action));
+            commandWords.register(action, new DodgeCommand(output, player, action, greatTome));
         }
 
         commandWords.register("ajuda", new HelpCommand(output, commandWords));
