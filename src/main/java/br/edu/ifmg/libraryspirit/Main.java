@@ -46,7 +46,7 @@ public class Main {
         commandWords.register("pegar", new TakeCommand(output, player));
         commandWords.register("inventario", new InventoryCommand(output, player));
         commandWords.register("responder", new AnswerCommand(output, player));
-        commandWords.register("usar", new UseCommand(output, player));
+        commandWords.register("usar", new UseCommand(output, player, greatTome));
         commandWords.register("status", new StatusCommand(output, player));
 
         for (String action : Threat.VALID_ACTIONS) {
