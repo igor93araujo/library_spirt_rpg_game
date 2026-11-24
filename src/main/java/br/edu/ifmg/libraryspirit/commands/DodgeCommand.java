@@ -1,11 +1,11 @@
 package br.edu.ifmg.libraryspirit.commands;
 
+import br.edu.ifmg.libraryspirit.boss.GreatTome;
+import br.edu.ifmg.libraryspirit.boss.SealingStage;
 import br.edu.ifmg.libraryspirit.characters.Player;
 import br.edu.ifmg.libraryspirit.characters.Threat;
 import br.edu.ifmg.libraryspirit.ui.Output;
 import br.edu.ifmg.libraryspirit.world.Room;
-import br.edu.ifmg.libraryspirit.boss.GreatTome;
-import br.edu.ifmg.libraryspirit.boss.SealingStage;
 
 /**
  * Comando de reação a uma ameaça: "desviar", "pular", "abaixar" ou "esconder".
@@ -17,16 +17,24 @@ import br.edu.ifmg.libraryspirit.boss.SealingStage;
  */
 public class DodgeCommand implements Command {
 
-    /** Onde as mensagens são exibidas. */
+    /**
+     * Onde as mensagens são exibidas.
+     */
     private final Output output;
 
-    /** Jogador que reage à ameaça. */
+    /**
+     * Jogador que reage à ameaça.
+     */
     private final Player player;
 
-    /** chefe final compartilhando pelos comandos do jogo.*/
-    private final  GreatTome greatTome;
+    /**
+     * chefe final compartilhando pelos comandos do jogo.
+     */
+    private final GreatTome greatTome;
 
-    /** Ação que este comando representa (ex.: "pular"). */
+    /**
+     * Ação que este comando representa (ex.: "pular").
+     */
     private final String action;
 
     /**
@@ -40,15 +48,15 @@ public class DodgeCommand implements Command {
         this.output = output;
         this.player = player;
         this.action = action;
-        this.greatTome =greatTome;
+        this.greatTome = greatTome;
     }
 
     /**
      * Reage à ameaça atual da sala. O argumento é ignorado.
      *
      * @param argument ignorado
-     * @return {@code true} se o jogador ficou sem vidas e o jogo deve terminar,
-     *         {@code false} caso contrário
+     * @return {@code true} se o jogador ficou sem vidas 'fora do chefe' e o jogo deve terminar,
+     * {@code false} caso contrário
      */
     @Override
     public boolean execute(String argument) {
@@ -69,9 +77,9 @@ public class DodgeCommand implements Command {
                     } else {
                         output.println(
                                 "Você escapou por um triz!\n"
-                                        + "A página mágica começa a brilhar em suas mãos.\n"
-                                        + "A ameaça foi superada.\n"
-                                        + "Agora use a página correspondente para restaurar o selo!"
+                                + "A página mágica começa a brilhar em suas mãos.\n"
+                                + "A ameaça foi superada.\n"
+                                + "Agora use a página correspondente para restaurar o selo!"
                         );
                     }
 
@@ -82,8 +90,7 @@ public class DodgeCommand implements Command {
                 }
 
                 if (!player.isAlive()) {
-                    output.println("Suas forças se esgotaram. Fim de jogo.");
-                    return true;
+                    handleBossDefeat();
                 }
 
                 return false;
@@ -119,5 +126,21 @@ public class DodgeCommand implements Command {
             output.println("Reaja: desviar, pular, abaixar ou esconder.");
         }
         return false;
+    }
+        /**
+     * Trata a derrota no chefe: restaura as vidas e reinicia o confronto
+     * na primeira etapa. As páginas continuam no inventário.
+     */
+    private void handleBossDefeat() {
+        player.restoreLives();
+        greatTome.resetStages();
+
+        output.println();
+        output.println("Suas forças se esgotam e o Grande Tomo te derruba...");
+        output.println("Mas as páginas continuam com você. O confronto recomeça!");
+        output.println("Vidas: " + player.getLives());
+        output.println();
+        output.println("Etapa atual: " + greatTome.getCurrentStage().getTheme());
+        output.println(greatTome.getCurrentStage().getCurrentThreat().getDescription());
     }
 }

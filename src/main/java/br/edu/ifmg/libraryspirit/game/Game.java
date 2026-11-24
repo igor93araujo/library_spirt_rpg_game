@@ -6,30 +6,39 @@ import br.edu.ifmg.libraryspirit.ui.Output;
 import br.edu.ifmg.libraryspirit.world.Room;
 
 /**
- * Controla a partida: mostra a introdução, lê os comandos do jogador
- * e executa cada um até o jogo terminar.
- * O Game não sabe ler texto (isso é do {@link Parser}), nem imprimir
- * (isso é do {@link Output}), nem o que cada comando faz (isso é de cada
- * {@link Command}). Ele só coordena as partes.
+ * Controla a partida: mostra a introdução, lê os comandos do jogador e executa
+ * cada um até o jogo terminar. O Game não sabe ler texto (isso é do
+ * {@link Parser}), nem imprimir (isso é do {@link Output}), nem o que cada
+ * comando faz (isso é de cada {@link Command}). Ele só coordena as partes.
  *
  * @author Grupo O Espírito da Biblioteca
  * @version 1.0
  */
 public class Game {
 
-    /** Título do jogo exibido ao jogador. */
+    /**
+     * Título do jogo exibido ao jogador.
+     */
     public static final String TITLE = "O Espírito da Biblioteca";
 
-    /** Lê o que o jogador digita. */
+    /**
+     * Lê o que o jogador digita.
+     */
     private final Parser parser;
 
-    /** Onde as mensagens são exibidas. */
+    /**
+     * Onde as mensagens são exibidas.
+     */
     private final Output output;
 
-    /** Comandos válidos do jogo. */
+    /**
+     * Comandos válidos do jogo.
+     */
     private final CommandWords commandWords;
 
-    /** O jogador da partida. */
+    /**
+     * O jogador da partida.
+     */
     private final Player player;
 
     /**
@@ -48,10 +57,10 @@ public class Game {
     }
 
     /**
-     * Executa a partida: mostra a introdução e repete o ciclo
-     * "mostrar prompt → ler comando → executar" até um comando encerrar
-     * o jogo ou a entrada terminar. Cada resposta fica entre linhas em
-     * branco para facilitar a leitura.
+     * Executa a partida: mostra a introdução e repete o ciclo "mostrar prompt →
+     * ler comando → executar" até um comando encerrar o jogo ou a entrada
+     * terminar. Cada resposta fica entre linhas em branco para facilitar a
+     * leitura.
      */
     public void play() {
         printWelcome();
@@ -79,8 +88,13 @@ public class Game {
         output.println();
         output.println();
         output.println("=== " + TITLE + " ===");
-        output.println("Um feitiço antigo foi quebrado e as histórias escaparam dos livros.");
-        output.println("Só você, o espírito guardião, pode consertar o estrago.");
+        output.println("Há cem anos, esta biblioteca guarda as histórias do mundo.");
+        output.println("Mas um feitiço antigo se quebrou e as histórias escaparam dos livros.");
+        output.println("Três páginas mágicas (Terror, Aventura e Ficção Científica) foram");
+        output.println("arrancadas do Grande Tomo, e a biblioteca começa a enlouquecer.");
+        output.println();
+        output.println("Só você, o espírito guardião, pode recolhê-las e selar o Grande Tomo");
+        output.println("antes que as histórias se percam para sempre.");
         output.println("Digite 'ajuda' se precisar.");
         output.println();
         output.println(room.getDescription());
