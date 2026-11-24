@@ -49,9 +49,14 @@ class UseCommandBossTest {
     @Test
     void correctPageInBossRoomSealsStageAndAdvances() {
         player.moveTo(bossRoom);
-        greatTome.getCurrentStage().advanceRound();
+        finishStageRounds();
         use.execute("pagina do terror");
         assertTrue(output.getAllText().contains("PRIMEIRO SELO RESTAURADO"));
         assertEquals(Theme.ADVENTURE, greatTome.getCurrentStage().getTheme());
+    }
+    private void finishStageRounds() {
+        while (!greatTome.getCurrentStage().isCompleted()) {
+            greatTome.getCurrentStage().advanceRound();
+        }
     }
 }
