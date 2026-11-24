@@ -154,10 +154,12 @@ public class UseCommand implements Command {
     private void showVictory() {
         output.println();
         output.println("=== O GRANDE TOMO ESTÁ SELADO! ===");
-        output.println("As três páginas voltaram ao lugar e o silêncio retorna à biblioteca.");
-        output.println("As histórias deixam de escapar e voltam a dormir entre as capas.");
-        output.println("Você cumpriu seu dever de espírito guardião.");
+        output.println("As três páginas voltam ao lugar, e uma luz suave percorre a biblioteca.");
+        output.println("A névoa se dissipa, a floresta se fecha em um livro e as estrelas");
+        output.println("voltam a dormir entre as capas.");
+        output.println("As histórias retornam aos seus livros, e o silêncio volta às estantes.");
         output.println();
+        output.println("Você cumpriu seu dever de espírito guardião.");
         output.println("PARABÉNS, VOCÊ VENCEU!");
     }
 }

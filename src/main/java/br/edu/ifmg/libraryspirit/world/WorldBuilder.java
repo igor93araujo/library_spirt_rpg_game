@@ -1,13 +1,13 @@
 package br.edu.ifmg.libraryspirit.world;
 
-import br.edu.ifmg.libraryspirit.items.Bookmark;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifmg.libraryspirit.characters.Threat;
+import br.edu.ifmg.libraryspirit.items.Bookmark;
 import br.edu.ifmg.libraryspirit.items.Key;
 import br.edu.ifmg.libraryspirit.items.MagicPage;
 import br.edu.ifmg.libraryspirit.items.Theme;
-import br.edu.ifmg.libraryspirit.characters.Threat;
 
 /**
  * Monta o mapa da biblioteca: cria as salas e liga as saídas entre elas.
@@ -34,21 +34,25 @@ public class WorldBuilder {
      */
     public Room build() {
         Room hall = new Room(
-                "Você está no Hall de Entrada. Estantes antigas cercam o salão\n"
-                + "e páginas soltas flutuam no ar, como se o vento as carregasse.");
+                "Você está no Hall de Entrada. Estantes antigas cercam o salão, e páginas\n"
+                + "soltas flutuam no ar, como se o vento as carregasse. Há quatro passagens,\n"
+                + "e algumas parecem fechadas há muito tempo.");
         Room horror = new Room(
-                "Você está na Seção de Terror. Uma névoa fria cobre o chão,\n"
-                + "teias de aranha pendem das estantes altas e algo se move nas sombras.");
+                "Você está na Seção de Terror. Uma névoa fria cobre o chão, teias de aranha\n"
+                + "pendem das estantes altas e algo se move nas sombras. Os livros\n"
+                + "sussurram quando você passa.");
         Room adventure = new Room(
-                "Você está na Seção de Aventura. Um livro de exploração aberto\n"
-                + "transformou a sala numa floresta densa, cheia de raízes e cipós.");
+                "Você está na Seção de Aventura. Um livro de exploração aberto transformou\n"
+                + "a sala numa floresta densa, cheia de raízes e cipós. Ao longe, ouve-se\n"
+                + "o ruído de papel dobrando.");
         Room sciFi = new Room(
                 "Você está na Seção de Ficção Científica. O teto se abriu em estrelas\n"
-                + "holográficas e os computadores antigos piscam como se estivessem vivos.");
+                + "holográficas, e os computadores antigos piscam como se estivessem vivos.\n"
+                + "Um zumbido metálico ecoa entre as estantes.");
         Room readingRoom = new Room(
-                "Você está na Sala de Leitura Central. Sob a grande claraboia,\n"
-                + "o Grande Tomo repousa no pedestal, cercado por páginas que giram no ar.");
-
+                "Você está na Sala de Leitura Central. Sob a grande claraboia, o Grande Tomo\n"
+                + "repousa no pedestal, cercado por páginas que giram no ar. Há espaços\n"
+                + "vazios em sua capa, do tamanho exato de três páginas.");
         readingRoom.setBossRoom(true);
 
         horror.addItem(new MagicPage(Theme.HORROR));
@@ -74,7 +78,6 @@ public class WorldBuilder {
                 "Quem escreveu o romance 'Dom Casmurro'?", "machado de assis");
         lock(hall, "sul", readingRoom, "norte", new Door(pages, riddle));
 
-
         horror.addThreat(new Threat(
                 "Uma sombra desliza pela estante em sua direção...", "esconder"));
         horror.addThreat(new Threat(
@@ -89,7 +92,6 @@ public class WorldBuilder {
                 "Um feixe de laser corrompido varre a sala!", "desviar"));
         sciFi.addThreat(new Threat(
                 "Um robô de segurança avança, com os olhos vermelhos procurando por você...", "esconder"));
-
 
         return hall;
     }
