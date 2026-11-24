@@ -34,22 +34,27 @@ public class WorldBuilder {
      */
     public Room build() {
         Room hall = new Room(
+                "Hall de Entrada",
                 "Você está no Hall de Entrada. Estantes antigas cercam o salão, e páginas\n"
                 + "soltas flutuam no ar, como se o vento as carregasse. Há quatro passagens,\n"
                 + "e algumas parecem fechadas há muito tempo.");
         Room horror = new Room(
+                "Seção de Terror",
                 "Você está na Seção de Terror. Uma névoa fria cobre o chão, teias de aranha\n"
                 + "pendem das estantes altas e algo se move nas sombras. Os livros\n"
                 + "sussurram quando você passa.");
         Room adventure = new Room(
+                "Seção de Aventura",
                 "Você está na Seção de Aventura. Um livro de exploração aberto transformou\n"
                 + "a sala numa floresta densa, cheia de raízes e cipós. Ao longe, ouve-se\n"
                 + "o ruído de papel dobrando.");
         Room sciFi = new Room(
+                "Seção de Ficção Científica",
                 "Você está na Seção de Ficção Científica. O teto se abriu em estrelas\n"
                 + "holográficas, e os computadores antigos piscam como se estivessem vivos.\n"
                 + "Um zumbido metálico ecoa entre as estantes.");
         Room readingRoom = new Room(
+                "Sala de Leitura Central",
                 "Você está na Sala de Leitura Central. Sob a grande claraboia, o Grande Tomo\n"
                 + "repousa no pedestal, cercado por páginas que giram no ar. Há espaços\n"
                 + "vazios em sua capa, do tamanho exato de três páginas.");

@@ -81,6 +81,15 @@ public class Inventory {
     }
 
     /**
+     * Retorna uma visão imutável dos itens, na ordem em que foram adicionados.
+     *
+     * @return lista imutável de itens
+     */
+    public List<Item> getItems() {
+        return java.util.Collections.unmodifiableList(items);
+    }
+
+    /**
      * Monta a lista com os nomes dos itens, separados por vírgula.
      *
      * @return texto como "chave de bronze, vela", ou texto vazio se não houver itens

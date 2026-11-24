@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import br.edu.ifmg.libraryspirit.items.Item;
@@ -89,5 +90,18 @@ class PlayerTest {
         assertFalse(player.isAlive());
         player.restoreLives();
         assertEquals(3, player.getLives());
+    }
+
+    @Test
+    void getItemsReturnsCarriedItemsAndIsImmutable() {
+        Player player = new Player(new Room("Hall"));
+        assertTrue(player.getItems().isEmpty());
+        Item key = new SimpleItem("chave");
+        player.addItem(key);
+        assertEquals(java.util.List.of(key), player.getItems());
+        assertThrows(UnsupportedOperationException.class,
+                () -> player.getItems().add(new SimpleItem("outro")));
+        assertThrows(UnsupportedOperationException.class,
+                () -> player.getItems().clear());
     }
 }

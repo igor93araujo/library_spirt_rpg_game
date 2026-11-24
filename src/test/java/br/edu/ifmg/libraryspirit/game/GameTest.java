@@ -45,6 +45,20 @@ class GameTest {
     }
 
     @Test
+    void welcomeTextHasStoryAndIsPrintedByPlay() {
+        String story = Game.welcomeText();
+        assertTrue(story.contains("Grande Tomo"));
+        assertTrue(story.contains("Digite 'ajuda' se precisar."));
+
+        playWith("sair\n");
+        for (String line : story.split("\n")) {
+            if (!line.isEmpty()) {
+                assertTrue(output.getMessages().contains(line));
+            }
+        }
+    }
+
+    @Test
     void executesCommandsUntilQuit() {
         playWith("ajuda\nsair\najuda\n");
 

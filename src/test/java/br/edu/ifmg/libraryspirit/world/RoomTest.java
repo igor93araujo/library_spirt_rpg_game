@@ -66,6 +66,29 @@ class RoomTest {
     }
 
     @Test
+    void keepsNameAndDescription() {
+        Room room = new Room("Hall", "Um salão.");
+        assertEquals("Hall", room.getName());
+        assertEquals("Um salão.", room.getDescription());
+    }
+
+    @Test
+    void legacyConstructorHasEmptyName() {
+        assertEquals("", new Room("Algo").getName());
+    }
+
+    @Test
+    void getItemsIsImmutableAndReflectsRoom() {
+        Room room = new Room("Hall", "Um salão.");
+        Item key = new SimpleItem("chave");
+        room.addItem(key);
+
+        assertEquals(java.util.List.of(key), room.getItems());
+        org.junit.jupiter.api.Assertions.assertThrows(UnsupportedOperationException.class,
+                () -> room.getItems().clear());
+    }
+
+    @Test
     void showsNoExitsWhenEmpty() {
         Room room = new Room("Sala isolada");
         assertEquals("Saídas: nenhuma", room.getExitsDescription());

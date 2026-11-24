@@ -81,6 +81,24 @@ public class Game {
     }
 
     /**
+     * Texto do enredo da introdução (sem o título e sem a sala inicial), com
+     * linhas separadas por "\n".
+     *
+     * @return o texto da introdução
+     */
+    public static String welcomeText() {
+        return String.join("\n",
+                "Há cem anos, esta biblioteca guarda as histórias do mundo.",
+                "Mas um feitiço antigo se quebrou e as histórias escaparam dos livros.",
+                "Três páginas mágicas (Terror, Aventura e Ficção Científica) foram",
+                "arrancadas do Grande Tomo, e a biblioteca começa a enlouquecer.",
+                "",
+                "Só você, o espírito guardião, pode recolhê-las e selar o Grande Tomo",
+                "antes que as histórias se percam para sempre.",
+                "Digite 'ajuda' se precisar.");
+    }
+
+    /**
      * Mostra a introdução do jogo e a sala inicial.
      */
     private void printWelcome() {
@@ -88,14 +106,9 @@ public class Game {
         output.println();
         output.println();
         output.println("=== " + TITLE + " ===");
-        output.println("Há cem anos, esta biblioteca guarda as histórias do mundo.");
-        output.println("Mas um feitiço antigo se quebrou e as histórias escaparam dos livros.");
-        output.println("Três páginas mágicas (Terror, Aventura e Ficção Científica) foram");
-        output.println("arrancadas do Grande Tomo, e a biblioteca começa a enlouquecer.");
-        output.println();
-        output.println("Só você, o espírito guardião, pode recolhê-las e selar o Grande Tomo");
-        output.println("antes que as histórias se percam para sempre.");
-        output.println("Digite 'ajuda' se precisar.");
+        for (String line : welcomeText().split("\n", -1)) {
+            output.println(line);
+        }
         output.println();
         output.println(room.getDescription());
         output.println(room.getExitsDescription());
@@ -108,7 +121,7 @@ public class Game {
      * @param input comando e argumento lidos pelo {@link Parser}
      * @return {@code true} se o jogo deve terminar
      */
-    private boolean processInput(ParsedInput input) {
+    public boolean processInput(ParsedInput input) {
         if (input.isEmpty()) {
             return false;
         }

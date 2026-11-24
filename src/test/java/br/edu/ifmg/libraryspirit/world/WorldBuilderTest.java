@@ -35,6 +35,15 @@ class WorldBuilderTest {
     }
 
     @Test
+    void roomsAreNamed() {
+        assertEquals("Hall de Entrada", hall.getName());
+        assertEquals("Seção de Terror", hall.getExit("oeste").getName());
+        assertEquals("Seção de Aventura", hall.getExit("leste").getName());
+        assertEquals("Seção de Ficção Científica", hall.getExit("norte").getName());
+        assertEquals("Sala de Leitura Central", hall.getExit("sul").getName());
+    }
+
+    @Test
     void everyRoomLeadsBackToHall() {
         assertSame(hall, hall.getExit("oeste").getExit("leste"));
         assertSame(hall, hall.getExit("leste").getExit("oeste"));

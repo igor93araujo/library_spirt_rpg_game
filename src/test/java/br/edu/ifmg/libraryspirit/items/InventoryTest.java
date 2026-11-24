@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -50,5 +51,19 @@ class InventoryTest {
         inventory.add(new SimpleItem("vela"));
 
         assertEquals("chave, vela", inventory.getNames());
+    }
+
+    @Test
+    void getItemsReturnsItemsInOrderAndIsImmutable() {
+        Inventory inventory = new Inventory();
+        Item key = new SimpleItem("chave");
+        Item candle = new SimpleItem("vela");
+        inventory.add(key);
+        inventory.add(candle);
+        assertEquals(java.util.List.of(key, candle), inventory.getItems());
+        assertThrows(UnsupportedOperationException.class,
+                () -> inventory.getItems().add(new SimpleItem("outro")));
+        assertThrows(UnsupportedOperationException.class,
+                () -> inventory.getItems().remove(0));
     }
 }
