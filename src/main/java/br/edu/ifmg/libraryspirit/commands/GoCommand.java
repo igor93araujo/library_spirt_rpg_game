@@ -5,6 +5,7 @@ import br.edu.ifmg.libraryspirit.ui.Output;
 import br.edu.ifmg.libraryspirit.world.Door;
 import br.edu.ifmg.libraryspirit.world.Room;
 import br.edu.ifmg.libraryspirit.boss.GreatTome;
+import br.edu.ifmg.libraryspirit.boss.SealingStage;
 
 
 /**
@@ -60,6 +61,12 @@ public class GoCommand implements Command {
             return false;
         }
 
+        if (player.getCurrentRoom().isBossRoom()
+                && !greatTome.isDefeated()
+                && greatTome.getCurrentStage().hasActiveThreat()) {
+            output.println("O Grande Tomo ainda ameaça você! Reaja antes de sair: desviar, pular, abaixar ou esconder.");
+            return false;
+        }
         Room next = player.getCurrentRoom().getExit(direction);
         if (next == null) {
             output.println("Não há passagem nessa direção.");
@@ -74,11 +81,16 @@ public class GoCommand implements Command {
         output.println(next.getDescription());
         output.println(next.getExitsDescription());
 
-        if (next.isBossRoom()) {
+        if (next.isBossRoom() && !greatTome.isDefeated()) {
+            SealingStage stage = greatTome.getCurrentStage();
             output.println();
             output.println("=== O GRANDE TOMO DESPERTOU! ===");
-            output.println("Etapa atual: " + greatTome.getCurrentStage().getTheme());
-            output.println(greatTome.getCurrentStage().getCurrentThreat().getDescription());
+            output.println("Etapa atual: " + stage.getTheme());
+            if (stage.hasActiveThreat()) {
+                output.println(stage.getCurrentThreat().getDescription());
+            } else {
+                output.println("As ameaças terminaram. Use a página mágica correspondente.");
+            }
         }
 
         if (next.hasActiveThreat()) {
