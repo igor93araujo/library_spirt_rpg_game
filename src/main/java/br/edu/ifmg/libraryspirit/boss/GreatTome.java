@@ -12,7 +12,7 @@ import java.util.List;
  * O confronto possui três etapas:
  * Terror, Aventura e Ficção Científica.
  *
- * Cada etapa possui uma ameaça e exige
+ * Cada etapa possui três rodadas de ameaças e exige
  * uma página mágica correspondente.
  */
 public class GreatTome {
@@ -22,13 +22,13 @@ public class GreatTome {
     private int currentStageIndex = 0;
 
     /**
-     * Inicializa as três etapas do Grande Tomo.
+     * Inicializa as três etapas do Grande Tomo, cada uma com três rodadas.
      */
     public GreatTome() {
 
         stages = new ArrayList<>();
 
-        // ETAPA 1 - TERROR: O ABISMO
+        // ETAPA 1 - TERROR: sombras e livros de feitiços voadores
 
         List<Threat> horrorThreats = new ArrayList<>();
 
@@ -40,77 +40,82 @@ public class GreatTome {
                         + "Três páginas deverão restaurar o equilíbrio.\n"
                         + "Mas será você capaz de enfrentar\n"
                         + "o que existe dentro delas?\"\n\n"
-
                         + "Uma gargalhada sombria ecoa pela biblioteca.\n"
-                        + "O chão começa a rachar sob seus pés!\n"
-                        + "Das profundezas, uma escuridão parece\n"
-                        + "querer engolir tudo ao redor.\n\n"
-                        + "O chão está desmoronando!\n"
-                        + "Reaja antes que seja tarde!",
-                "pular"
+                        + "Uma sombra escorre do livro e desliza\n"
+                        + "pelo chão, vindo em sua direção...\n"
+                        + "Reaja!",
+                "esconder"
+        ));
+        horrorThreats.add(new Threat(
+                "Um livro de feitiços se solta do Grande Tomo\n"
+                        + "e voa direto na altura da sua cabeça!\n"
+                        + "Reaja!",
+                "abaixar"
+        ));
+        horrorThreats.add(new Threat(
+                "Sombras e livros de feitiços giram juntos\n"
+                        + "e investem contra você de todos os lados!\n"
+                        + "Reaja!",
+                "desviar"
         ));
 
-        SealingStage terrorStage = new SealingStage(
-                Theme.HORROR,
-                horrorThreats,
-                "terror"
-        );
+        stages.add(new SealingStage(Theme.HORROR, horrorThreats, "terror"));
 
-        stages.add(terrorStage);
-
-        // ETAPA 2 - AVENTURA: O MAPA IMPOSSÍVEL
+        // ETAPA 2 - AVENTURA: raízes, cipós e tigres de origami
 
         List<Threat> adventureThreats = new ArrayList<>();
 
         adventureThreats.add(new Threat(
                 "AVENTURA - O MAPA IMPOSSÍVEL\n\n"
-                        + "Mas a tranquilidade dura pouco...\n"
-                        + "Um mapa antigo se desenrola no ar.\n"
-                        + "Montanhas, oceanos e cidades surgem\n"
-                        + "em suas linhas encantadas.\n"
-                        + "De repente, os caminhos se embaralham!\n"
-                        + "Uma muralha de pergaminhos se ergue\n"
-                        + "e avança como uma onda pelo salão.\n\n"
-                        + "Ela está prestes a atingir você!\n"
+                        + "Um mapa antigo se desenrola no ar e a sala\n"
+                        + "vira uma floresta densa.\n"
+                        + "Raízes brotam do chão sob seus pés!\n"
+                        + "Reaja!",
+                "pular"
+        ));
+        adventureThreats.add(new Threat(
+                "Cipós grossos descem das árvores de papel,\n"
+                        + "balançando bem na altura da sua cabeça!\n"
+                        + "Reaja!",
+                "abaixar"
+        ));
+        adventureThreats.add(new Threat(
+                "Um tigre de origami salta do mapa\n"
+                        + "em sua direção, de garras abertas!\n"
                         + "Reaja!",
                 "desviar"
         ));
 
-        SealingStage adventureStage = new SealingStage(
-                Theme.ADVENTURE,
-                adventureThreats,
-                "aventura"
-        );
+        stages.add(new SealingStage(Theme.ADVENTURE, adventureThreats, "aventura"));
 
-        stages.add(adventureStage);
-
-        // ETAPA 3 - FICÇÃO CIENTÍFICA:
-        // A ANOMALIA GRAVITACIONAL
+        // ETAPA 3 - FICÇÃO CIENTÍFICA: lasers e robôs
 
         List<Threat> sciFiThreats = new ArrayList<>();
 
         sciFiThreats.add(new Threat(
                 "FICÇÃO CIENTÍFICA - A ANOMALIA GRAVITACIONAL\n\n"
-                        + "As luzes começam a piscar.\n"
-                        + "Um som metálico rompe o silêncio.\n"
-                        + "As letras se desprendem das páginas\n"
-                        + "e começam a flutuar pelo salão.\n\n"
-                        + "Uma voz metálica anuncia:\n"
-                        + "\"ANOMALIA GRAVITACIONAL DETECTADA!\"\n\n"
-                        + "O espaço ao seu redor se distorce.\n"
-                        + "Um arco de energia comprime o ar\n"
-                        + "e avança na altura da sua cabeça!\n\n"
+                        + "As luzes começam a piscar e uma voz metálica anuncia:\n"
+                        + "\"ANOMALIA GRAVITACIONAL DETECTADA!\"\n"
+                        + "Um feixe de laser de dados corrompidos\n"
+                        + "varre a sala!\n"
                         + "Reaja!",
-                "abaixar"
+                "desviar"
+        ));
+        sciFiThreats.add(new Threat(
+                "Um robô de manutenção com defeito surge\n"
+                        + "dos computadores, com os olhos vermelhos\n"
+                        + "procurando por você...\n"
+                        + "Reaja!",
+                "esconder"
+        ));
+        sciFiThreats.add(new Threat(
+                "Um feixe de laser rasteiro corta o salão\n"
+                        + "rente ao chão, e um robô avança logo atrás!\n"
+                        + "Reaja!",
+                "pular"
         ));
 
-        SealingStage sciFiStage = new SealingStage(
-                Theme.SCI_FI,
-                sciFiThreats,
-                "ficcao"
-        );
-
-        stages.add(sciFiStage);
+        stages.add(new SealingStage(Theme.SCI_FI, sciFiThreats, "ficcao"));
     }
 
     /**

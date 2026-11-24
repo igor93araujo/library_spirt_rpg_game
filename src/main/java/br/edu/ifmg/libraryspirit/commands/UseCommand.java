@@ -59,6 +59,7 @@ public class UseCommand implements Command {
             return false;
         }
         if (item instanceof MagicPage
+                && player.getCurrentRoom().isBossRoom()
                 && greatTome != null
                 && greatTome.getCurrentStage() != null) {
 
