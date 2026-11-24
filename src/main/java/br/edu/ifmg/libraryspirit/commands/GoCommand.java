@@ -61,6 +61,12 @@ public class GoCommand implements Command {
             return false;
         }
 
+        if (player.getCurrentRoom().isBossRoom()
+                && !greatTome.isDefeated()
+                && greatTome.getCurrentStage().hasActiveThreat()) {
+            output.println("O Grande Tomo ainda ameaça você! Reaja antes de sair: desviar, pular, abaixar ou esconder.");
+            return false;
+        }
         Room next = player.getCurrentRoom().getExit(direction);
         if (next == null) {
             output.println("Não há passagem nessa direção.");

@@ -41,6 +41,20 @@ class GoCommandBossTest {
         assertTrue(output.getAllText().contains("O chão está desmoronando"));
     }
     @Test
+    void blocksLeavingBossRoomWhileBossThreatIsActive() {
+        go.execute("sul");
+        go.execute("norte");
+        assertSame(bossRoom, player.getCurrentRoom());
+        assertTrue(output.getAllText().contains("O Grande Tomo ainda ameaça você"));
+    }
+    @Test
+    void allowsLeavingBossRoomAfterStageThreatsEnded() {
+        go.execute("sul");
+        greatTome.getCurrentStage().advanceRound();
+        go.execute("norte");
+        assertSame(hall, player.getCurrentRoom());
+    }
+    @Test
     void doesNotFailWhenReenteringAfterStageThreatsEnded() {
         go.execute("sul");
         greatTome.getCurrentStage().advanceRound();
@@ -52,11 +66,11 @@ class GoCommandBossTest {
     @Test
     void doesNotFailWhenReenteringAfterBossDefeated() {
         go.execute("sul");
-        go.execute("norte");
         while (!greatTome.isDefeated()) {
             greatTome.getCurrentStage().advanceRound();
             greatTome.advanceStage();
         }
+        go.execute("norte");
         output.getMessages().clear();
         assertDoesNotThrow(() -> go.execute("sul"));
         assertSame(bossRoom, player.getCurrentRoom());
