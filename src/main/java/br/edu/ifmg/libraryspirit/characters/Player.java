@@ -98,6 +98,15 @@ public class Player {
     }
 
     /**
+     * Retorna uma visão imutável dos itens que o jogador carrega.
+     *
+     * @return lista imutável de itens
+     */
+    public java.util.List<Item> getItems() {
+        return inventory.getItems();
+    }
+
+    /**
      * Monta o texto que lista o inventário do jogador.
      *
      * @return texto como "Você carrega: chave, vela", ou aviso de inventário vazio

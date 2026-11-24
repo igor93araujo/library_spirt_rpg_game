@@ -20,6 +20,9 @@ import br.edu.ifmg.libraryspirit.characters.Threat;
  */
 public class Room {
 
+    /** Nome da sala (vazio se não informado). */
+    private final String name;
+
     /** Texto que descreve a sala para o jogador. */
     private final String description;
 
@@ -66,9 +69,38 @@ public class Room {
      * @param description texto que descreve a sala
      */
     public Room(String description) {
+        this("", description);
+    }
+
+    /**
+     * Cria uma sala com nome, sem saídas e sem itens.
+     *
+     * @param name nome da sala (ex.: "Hall de Entrada")
+     * @param description texto que descreve a sala
+     */
+    public Room(String name, String description) {
+        this.name = name;
         this.description = description;
         this.exits = new LinkedHashMap<>();
         this.items = new Inventory();
+    }
+
+    /**
+     * Retorna o nome da sala.
+     *
+     * @return o nome, ou texto vazio se a sala foi criada sem nome
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Retorna os itens que estão na sala.
+     *
+     * @return lista imutável de itens
+     */
+    public List<Item> getItems() {
+        return items.getItems();
     }
 
     /**
